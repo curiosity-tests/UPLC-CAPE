@@ -154,7 +154,6 @@ jobs:
           fetch-depth: 0
 
       - name: Check if the preview needs rebuilding
-        continue-on-error: true   # racecar: scan/report step, must not fail the build
         id: check_changes
         run: |
           # Deploy a preview when the report inputs (submission data), the report
@@ -223,7 +222,7 @@ jobs:
           nix develop --accept-flake-config --command bash -c "export PATH=\"\$PWD/result/bin:\$PATH\" && cape submission report --all"
 
       - name: Deploy to GitHub Pages
-        continue-on-error: true   # racecar: scan/report step, must not fail the build
+        continue-on-error: true   # racecar: scan/report/push step, must not fail the build
         if: steps.check_changes.outputs.has_changes == 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
